@@ -4,7 +4,7 @@ services:
     name: godm-backend
     env: node
     plan: starter
-    buildCommand: cd backend && npm install
+    buildCommand: npm install && cd backend && npm install
     startCommand: cd backend && node server-redis.js
     healthCheckPath: /health
     envVars:
