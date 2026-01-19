@@ -8,13 +8,12 @@ services:
     startCommand: cd backend && node server-redis.js
     healthCheckPath: /health
     envVars:
+      # System Configuration
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 10000
       - key: AUTO_MIGRATE
         value: true
-      # Instagram/Facebook API Configuration
+      # Instagram/Facebook API Configuration (set manually in dashboard)
       - key: INSTAGRAM_CLIENT_ID
         sync: false
       - key: INSTAGRAM_CLIENT_SECRET
@@ -29,10 +28,10 @@ services:
         sync: false
       - key: INSTAGRAM_BUSINESS_ACCOUNT_ID
         sync: false
-      # Webhook Configuration
+      # Webhook Configuration (set manually in dashboard)
       - key: WEBHOOK_VERIFY_TOKEN
         sync: false
-      # Redis Configuration (Render Redis)
+      # Redis Configuration (auto-connected from Redis service)
       - key: REDIS_URL
         fromService:
           type: redis
@@ -45,7 +44,7 @@ services:
     plan: starter
     maxmemoryPolicy: allkeys-lru
 
-  # Static Site (Frontend)
+  # Static Site (Frontend) - Optional
   - type: static
     name: godm-frontend
     buildCommand: npm install && npm run build:frontend

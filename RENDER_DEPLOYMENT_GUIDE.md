@@ -26,7 +26,10 @@ This guide will help you deploy the GODM (Instagram Automation System) to Render
    - Start Command: `cd backend && node server-redis.js`
    - Plan: `Starter` (or higher)
 
-2. **Configure Environment Variables** (see section below)
+2. **Configure Environment Variables** in Render Dashboard:
+   - Go to your service → Environment tab
+   - Add each variable manually (see section below)
+   - **Important**: Never commit sensitive values to Git
 
 #### Redis Database
 1. **Create Redis Service**:
@@ -42,33 +45,33 @@ This guide will help you deploy the GODM (Instagram Automation System) to Render
 
 ## 🔧 Environment Variables
 
-Set these in your Render service dashboard:
+**IMPORTANT**: Set these manually in Render Dashboard → Service → Environment tab. Never commit sensitive values to Git.
 
-### Required Variables
-```bash
-# Instagram/Facebook API
-INSTAGRAM_CLIENT_ID=your_facebook_app_id
-INSTAGRAM_CLIENT_SECRET=your_facebook_app_secret
-FACEBOOK_APP_ID=your_facebook_app_id
-FACEBOOK_APP_SECRET=your_facebook_app_secret
+### How to Set Environment Variables in Render:
+1. Go to [Render Dashboard](https://dashboard.render.com)
+2. Select your `godm-backend` service
+3. Click **Environment** tab
+4. Click **Add Environment Variable**
+5. Enter Key and Value for each variable below
 
-# Instagram Configuration
-INSTAGRAM_REDIRECT_URI=https://your-frontend-url.onrender.com/auth/callback
-INSTAGRAM_BOT_ACCESS_TOKEN=your_long_lived_access_token
-INSTAGRAM_BUSINESS_ACCOUNT_ID=your_instagram_business_account_id
+### Required Variables (Set Manually)
+| Key | Description | Example Value |
+|-----|-------------|---------------|
+| `INSTAGRAM_CLIENT_ID` | Facebook App ID | `123456789012345` |
+| `INSTAGRAM_CLIENT_SECRET` | Facebook App Secret | `abcdef123456...` |
+| `FACEBOOK_APP_ID` | Same as Client ID | `123456789012345` |
+| `FACEBOOK_APP_SECRET` | Same as Client Secret | `abcdef123456...` |
+| `INSTAGRAM_REDIRECT_URI` | OAuth callback URL | `https://your-frontend.onrender.com/auth/callback` |
+| `INSTAGRAM_BOT_ACCESS_TOKEN` | Long-lived Page Access Token | `EAABwz...` |
+| `INSTAGRAM_BUSINESS_ACCOUNT_ID` | Instagram Business Account ID | `17841400...` |
+| `WEBHOOK_VERIFY_TOKEN` | Secure random string | `your_secure_token_123` |
 
-# Webhook Configuration
-WEBHOOK_VERIFY_TOKEN=your_secure_webhook_token
-
-# System Configuration
-NODE_ENV=production
-AUTO_MIGRATE=true
-```
-
-### Auto-Generated Variables
-These are automatically set by Render:
-- `PORT` - Render assigns this automatically
-- `REDIS_URL` - Connected from Redis service
+### Auto-Generated Variables (Don't Set These)
+These are automatically provided by Render:
+- `PORT` - Assigned automatically by Render
+- `REDIS_URL` - Auto-connected from Redis service
+- `NODE_ENV` - Set to `production` in render.yaml
+- `AUTO_MIGRATE` - Set to `true` in render.yaml
 
 ## 📋 Pre-Deployment Checklist
 
