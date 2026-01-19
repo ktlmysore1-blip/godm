@@ -31,18 +31,21 @@ services:
       # Webhook Configuration (set manually in dashboard)
       - key: WEBHOOK_VERIFY_TOKEN
         sync: false
-      # Redis Configuration (auto-connected from Redis service)
+      # Additional Configuration
+      - key: FRONTEND_URL
+        sync: false
+      - key: ADMIN_KEY
+        sync: false
+      # Redis Configuration (using external Redis Cloud)
       - key: REDIS_URL
-        fromService:
-          type: redis
-          name: godm-redis
-          property: connectionString
+        sync: false
 
-  # Redis Database
-  - type: redis
-    name: godm-redis
-    plan: starter
-    maxmemoryPolicy: allkeys-lru
+  # Redis Database (Optional - only if using Render Redis)
+  # Uncomment if you want to use Render's managed Redis instead of external
+  # - type: redis
+  #   name: godm-redis
+  #   plan: starter
+  #   maxmemoryPolicy: allkeys-lru
 
   # Static Site (Frontend) - Optional
   - type: static

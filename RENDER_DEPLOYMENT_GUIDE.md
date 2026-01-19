@@ -31,11 +31,18 @@ This guide will help you deploy the GODM (Instagram Automation System) to Render
    - Add each variable manually (see section below)
    - **Important**: Never commit sensitive values to Git
 
-#### Redis Database
+#### Redis Database (Choose One Option)
+
+**Option A: Use Render Redis (Recommended for new projects)**
 1. **Create Redis Service**:
    - Name: `godm-redis`
    - Plan: `Starter`
-   - Connect to backend service
+   - Auto-connects to backend service
+
+**Option B: Use External Redis (e.g., Redis Cloud)**
+1. **Use existing Redis instance**
+2. **Set REDIS_URL manually** in environment variables
+3. **No additional Render Redis service needed**
 
 #### Frontend (Optional - Static Site)
 1. **Create Static Site**:
@@ -61,17 +68,19 @@ This guide will help you deploy the GODM (Instagram Automation System) to Render
 | `INSTAGRAM_CLIENT_SECRET` | Facebook App Secret | `abcdef123456...` |
 | `FACEBOOK_APP_ID` | Same as Client ID | `123456789012345` |
 | `FACEBOOK_APP_SECRET` | Same as Client Secret | `abcdef123456...` |
-| `INSTAGRAM_REDIRECT_URI` | OAuth callback URL | `https://your-frontend.onrender.com/auth/callback` |
+| `INSTAGRAM_REDIRECT_URI` | OAuth callback URL | `https://dm2comment.netlify.app/auth/callback` |
 | `INSTAGRAM_BOT_ACCESS_TOKEN` | Long-lived Page Access Token | `EAABwz...` |
 | `INSTAGRAM_BUSINESS_ACCOUNT_ID` | Instagram Business Account ID | `17841400...` |
 | `WEBHOOK_VERIFY_TOKEN` | Secure random string | `your_secure_token_123` |
+| `REDIS_URL` | External Redis connection | `redis://default:password@host:port` |
 
 ### Auto-Generated Variables (Don't Set These)
 These are automatically provided by Render:
 - `PORT` - Assigned automatically by Render
-- `REDIS_URL` - Auto-connected from Redis service
 - `NODE_ENV` - Set to `production` in render.yaml
 - `AUTO_MIGRATE` - Set to `true` in render.yaml
+
+**Note**: If using external Redis (like Redis Cloud), you'll need to set `REDIS_URL` manually.
 
 ## 📋 Pre-Deployment Checklist
 
@@ -83,10 +92,14 @@ These are automatically provided by Render:
 
 ## 🔗 Service URLs
 
-After deployment, your services will be available at:
+**Current Infrastructure:**
+- **Frontend**: [`https://dm2comment.netlify.app`](https://dm2comment.netlify.app) (Netlify)
+- **Redis**: Redis Cloud (ap-south-1 region)
+
+**After Render Backend Deployment:**
 - **Backend API**: `https://godm-backend-xxx.onrender.com`
-- **Frontend**: `https://godm-frontend-xxx.onrender.com`
 - **Health Check**: `https://godm-backend-xxx.onrender.com/health`
+- **Webhook URL**: `https://godm-backend-xxx.onrender.com/webhook/instagram`
 
 ## 🔄 Post-Deployment Setup
 
