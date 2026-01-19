@@ -31,3 +31,9 @@ backend/.env
 *.njsproj
 *.sln
 *.sw?
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
