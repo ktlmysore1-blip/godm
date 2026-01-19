@@ -1,0 +1,62 @@
+services:
+  # Backend API Service
+  - type: web
+    name: godm-backend
+    env: node
+    plan: starter
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server-redis.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: AUTO_MIGRATE
+        value: true
+      # Instagram/Facebook API Configuration
+      - key: INSTAGRAM_CLIENT_ID
+        sync: false
+      - key: INSTAGRAM_CLIENT_SECRET
+        sync: false
+      - key: FACEBOOK_APP_ID
+        sync: false
+      - key: FACEBOOK_APP_SECRET
+        sync: false
+      - key: INSTAGRAM_REDIRECT_URI
+        sync: false
+      - key: INSTAGRAM_BOT_ACCESS_TOKEN
+        sync: false
+      - key: INSTAGRAM_BUSINESS_ACCOUNT_ID
+        sync: false
+      # Webhook Configuration
+      - key: WEBHOOK_VERIFY_TOKEN
+        sync: false
+      # Redis Configuration (Render Redis)
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: godm-redis
+          property: connectionString
+
+  # Redis Database
+  - type: redis
+    name: godm-redis
+    plan: starter
+    maxmemoryPolicy: allkeys-lru
+
+  # Static Site (Frontend)
+  - type: static
+    name: godm-frontend
+    buildCommand: npm install && npm run build:frontend
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: godm-backend
+          envVarKey: RENDER_EXTERNAL_URL
+
+databases: []

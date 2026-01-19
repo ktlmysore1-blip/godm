@@ -8,10 +8,14 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "node start.js",
+    "start": "node render-start.js",
+    "start:railway": "node start.js",
     "backend:dev": "cd backend && npm run dev",
     "backend:start": "node backend/server.js",
-    "install:all": "npm install && cd backend && npm install"
+    "backend:render": "cd backend && node server-redis.js",
+    "install:all": "npm install && cd backend && npm install",
+    "render:build": "npm install && cd backend && npm install",
+    "render:start": "node render-start.js"
   },
   "dependencies": {
     "@fastify/cors": "^11.1.0",

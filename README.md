@@ -1,6 +1,6 @@
-# InstaAuto — Privacy-First Instagram Automation Demo
+# GODM — Instagram Automation System
 
-A fully working mobile-first Instagram automation prototype with no real Instagram integration. Perfect for product demos, validation, and development.
+A production-ready Instagram automation system with real Instagram API integration, Redis data storage, and comprehensive DM automation features.
 
 ## 🚀 Key Features
 
@@ -137,15 +137,31 @@ Instagram-inspired color palette with mobile-first components:
 - **Touch Targets**: Minimum 44px for accessibility
 - **Animations**: Smooth transitions and micro-interactions
 
-## 🚢 Deployment Ready
+## 🚢 Deployment
 
-**Development**: Frontend proxies `/api` calls to backend  
-**Production**: Deploy frontend and backend separately or together
+### Render.com (Recommended)
 
-**Example Docker Setup:**
-- Frontend: Static files served by nginx
-- Backend: Node.js container with API endpoints
-- Both: Single docker-compose for easy deployment
+This project is optimized for Render deployment with automatic Redis integration.
+
+**Quick Deploy:**
+1. Fork this repository
+2. Connect to [Render Dashboard](https://dashboard.render.com)
+3. Create new Blueprint from repository
+4. Set environment variables (see `.env.render`)
+5. Deploy automatically
+
+**Services Created:**
+- **Backend API**: Node.js web service with Redis
+- **Redis Database**: Managed Redis instance
+- **Frontend**: Static site (optional)
+
+See [`RENDER_DEPLOYMENT_GUIDE.md`](RENDER_DEPLOYMENT_GUIDE.md) for detailed instructions.
+
+### Alternative Deployments
+
+**Railway**: Use `start:railway` script with `railway.json` (legacy)
+**Docker**: Use provided Dockerfile for containerized deployment
+**VPS**: Manual deployment with PM2 or similar process manager
 
 ## 📋 Roadmap
 
