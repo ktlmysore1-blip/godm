@@ -49,6 +49,23 @@ fastify.register(cors, {
   optionsSuccessStatus: 204
 });
 
+// Root endpoint
+fastify.get('/', async (request, reply) => {
+  return { 
+    name: 'GODM Instagram Automation API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      health: '/health',
+      auth: '/api/auth/instagram',
+      reels: '/api/reels',
+      automation: '/api/automation',
+      webhook: '/webhook/instagram'
+    },
+    timestamp: new Date().toISOString()
+  };
+});
+
 // Health check endpoint with Redis status
 fastify.get('/health', async (request, reply) => {
   const redisStatus = redisClient.isConnected ? 'connected' : 'disconnected';
